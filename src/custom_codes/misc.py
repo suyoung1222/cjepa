@@ -202,6 +202,29 @@ def convert4save(array, is_video=False):
         return _convert4save_img(array)
 
 
+def angle_difference(a: np.ndarray, b: np.ndarray) -> np.ndarray:
+    """Smallest signed difference a-b wrapped to [-pi, pi]. Matches NWM misc.py."""
+    diff = a - b
+    return np.arctan2(np.sin(diff), np.cos(diff))
+
+
+def to_local_coords(positions: np.ndarray, origin: np.ndarray, origin_yaw: float) -> np.ndarray:
+    """Express world-frame xy positions in the local frame at (origin, origin_yaw).
+
+    Args:
+        positions: (N, 2) xy in world frame.
+        origin: (2,) world-frame xy of the local frame origin.
+        origin_yaw: scalar world-frame yaw of the local frame.
+
+    Returns:
+        (N, 2) positions in the local frame.
+    """
+    rel = positions - origin
+    c, s = np.cos(-origin_yaw), np.sin(-origin_yaw)
+    rot = np.array([[c, -s], [s, c]])
+    return rel @ rot.T
+
+
 def save_video(video, save_path, fps=30, codec='mp4v'):
     """video: np.ndarray of shape [M, H, W, 3]"""
     os.makedirs(os.path.dirname(save_path), exist_ok=True)
