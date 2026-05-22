@@ -229,11 +229,11 @@ class ModelObjectCallBack(Callback):
         if trainer.is_global_zero:
             if (trainer.current_epoch + 1) % self.epoch_interval == 0:
                 output_path = self.dirpath / f"{self.filename}_epoch_{trainer.current_epoch + 1}_object.ckpt"
-                torch.save(pl_module, output_path)
+                torch.save(pl_module.state_dict(), output_path)
                 logging.info(f"Saved world model object to {output_path}")
             if (trainer.current_epoch + 1) == trainer.max_epochs:
                 final_path = self.dirpath / f"{self.filename}_object.ckpt"
-                torch.save(pl_module, final_path)
+                torch.save(pl_module.state_dict(), final_path)
                 logging.info(f"Saved final world model object to {final_path}")
 
 

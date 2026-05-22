@@ -30,7 +30,7 @@ datasets:
   - scand
   - go_stanford
   - sacson
-cache_dir: "~/.stable_worldmodel"
+cache_dir: "/home/suyoung/mydata/NWM/results/nav_cjepa_cache"
 
 output_model_name: causal_world_model
 training_type: video  # options: video, wm
@@ -93,7 +93,7 @@ videosaur:
   SIM_TEMP: 0.15
 
 model:
-  load_weights: "~/.stable_worldmodel/artifacts/oc-checkpoints/oc_ckpt.ckpt"
+  load_weights: "$HOME/.stable_worldmodel/artifacts/oc-checkpoints/oc_ckpt.ckpt"
   modules_to_load: None
   input_type: video
   visualize: true
